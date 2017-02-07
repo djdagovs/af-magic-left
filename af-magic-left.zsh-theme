@@ -4,6 +4,7 @@
 
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+local exit_code="%(?,,[%{$fg[red]%}%? ↵ %{$reset_color%}])"
 
 
 # function virtualenv_info() {
@@ -32,11 +33,17 @@ eval my_orange='$FG[214]'
 # right prompt
 if type "virtualenv_prompt_info" > /dev/null
 then
-	# RPROMPT='$(virtualenv_prompt_info)$my_gray%n@%m%{$reset_color%}%'
-	RPROMPT='$(virtualenv_prompt_info)$my_gray%{$reset_color%}%'
+    # RPROMPT='$(virtualenv_prompt_info)$my_gray%n@%m%{$reset_color%}%'
+    # with time
+    # RPROMPT='$(virtualenv_prompt_info)[%*]${exit_code}'
+    # without time
+    RPROMPT='$(virtualenv_prompt_info)${exit_code}'
 else
-	# RPROMPT='$my_gray%n@%m%{$reset_color%}%'
-	RPROMPT='$my_gray{$reset_color%}%'
+    # RPROMPT='$my_gray%n@%m%{$reset_color%}%'
+    # with time
+    RPROMPT='[%*]${exit_code}'
+    # without time
+    RPROMPT='${exit_code}'
 fi
 
 # git settings
